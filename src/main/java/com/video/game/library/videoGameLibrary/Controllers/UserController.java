@@ -33,11 +33,10 @@ public class UserController {
 //        return userDB.findUserByiId(id);
 //    }
 
-    @GetMapping ("/api/users/{username}")
-    public User userByUsername (
-            @PathVariable(name="username") String username) {
-
-        return userDB.findUserByUsername(username);
+    @PostMapping ("/api/userbyusername")
+    public User findUserByUsername ( @RequestBody User user)
+            {
+        return userDB.findUserByUsername(user.getUsername(), user.getPassword());
     }
 
 

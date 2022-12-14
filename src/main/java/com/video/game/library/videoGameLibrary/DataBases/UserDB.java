@@ -63,18 +63,18 @@ public class UserDB {
 
         }
 
-    public User findUserByUsername (String username) {
+    public User findUserByUsername (String username,String password) {
         User userByUsername=new User();
         try {
             Connection connection = MyConnection.getConnection();
-            String sql = ("SELECT * from users WHERE username = ? ");
+            String sql = ("SELECT * from users WHERE username = ? and password = ? ");
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
-
+            preparedStatement.setString(2, password);
             ResultSet result = preparedStatement.executeQuery();
             result.next();
             long id = result.getLong("ID");
-            String password = result.getString("password");
+
             String email = result.getString("email");
 
             userByUsername = new User(id, username, password, email);

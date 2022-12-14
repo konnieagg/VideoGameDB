@@ -63,6 +63,28 @@ public class UserDB {
 
         }
 
+    public User findUserByUsername (String username) {
+        User userByUsername=new User();
+        try {
+            Connection connection = MyConnection.getConnection();
+            String sql = ("SELECT * from users WHERE username = ? ");
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+
+            ResultSet result = preparedStatement.executeQuery();
+            result.next();
+            long id = result.getLong("ID");
+            String password = result.getString("password");
+            String email = result.getString("email");
+
+            userByUsername = new User(id, username, password, email);
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return userByUsername;
+
+    }
+
     public long addNewUser (User user) {
         long id = 0;
         try {
@@ -82,6 +104,7 @@ public class UserDB {
 
         }catch (Exception exception) {
             exception.printStackTrace();
+            return 0;
         }
         return id;
     }

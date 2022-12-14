@@ -6,7 +6,7 @@ import com.video.game.library.videoGameLibrary.Services.UserService;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
-
+@CrossOrigin(origins="*")
 @RestController
 public class UserController {
 
@@ -28,18 +28,29 @@ public class UserController {
 
     }
 
-    @GetMapping ("/api/users/{id}")
-    public User userById (@PathVariable(name="id") long id) {
-        return userDB.findUserByiId(id);
+//    @GetMapping ("/api/users/{id}")
+//    public User userById (@PathVariable(name="id") long id) {
+//        return userDB.findUserByiId(id);
+//    }
+
+    @GetMapping ("/api/users/{username}")
+    public User userByUsername (
+            @PathVariable(name="username") String username) {
+
+        return userDB.findUserByUsername(username);
     }
+
 
     @PostMapping("/api/users")
     @ResponseBody
-    public User addNewUser (@RequestBody User user) {
+    public Object addNewUser (@RequestBody User user) {
 
         UserDB userDB = new UserDB();
-        long id = userDB.addNewUser(user);
 
+        long id = userDB.addNewUser(user);
+        if (id==0) {
+            return "User already exists!";
+        }
         user.setId(id);
 
         return user;

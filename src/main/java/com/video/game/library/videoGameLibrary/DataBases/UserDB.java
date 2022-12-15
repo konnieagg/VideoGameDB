@@ -78,6 +78,7 @@ public class UserDB {
             String email = result.getString("email");
 
             userByUsername = new User(id, username, password, email);
+
         }catch (Exception exception) {
             exception.printStackTrace();
             return null;

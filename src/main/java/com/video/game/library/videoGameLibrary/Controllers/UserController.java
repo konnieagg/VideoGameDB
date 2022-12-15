@@ -34,9 +34,12 @@ public class UserController {
 //    }
 
     @PostMapping ("/api/userbyusername")
-    public User findUserByUsername ( @RequestBody User user)
-            {
-        return userDB.findUserByUsername(user.getUsername(), user.getPassword());
+    public Object findUserByUsername ( @RequestBody User user) {
+        if (userDB.findUserByUsername(user.getUsername(), user.getPassword()) == null) {
+            return "User not found!";
+        }
+            return userDB.findUserByUsername(user.getUsername(), user.getPassword());
+
     }
 
 

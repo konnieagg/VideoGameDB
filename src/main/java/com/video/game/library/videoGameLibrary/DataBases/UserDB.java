@@ -80,6 +80,7 @@ public class UserDB {
             userByUsername = new User(id, username, password, email);
         }catch (Exception exception) {
             exception.printStackTrace();
+            return null;
         }
         return userByUsername;
 

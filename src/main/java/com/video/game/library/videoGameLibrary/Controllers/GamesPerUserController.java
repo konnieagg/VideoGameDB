@@ -1,17 +1,15 @@
 package com.video.game.library.videoGameLibrary.Controllers;
-
-
 import com.video.game.library.videoGameLibrary.DataBases.GamesPerUserDB;
-import com.video.game.library.videoGameLibrary.DataBases.UserDB;
 import com.video.game.library.videoGameLibrary.Entities.GamesPerUser;
-import com.video.game.library.videoGameLibrary.Entities.User;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins="*")
 @RestController
 public class GamesPerUserController {
 
-
+    GamesPerUserDB gamesPerUserDB = new GamesPerUserDB();
 
     @PostMapping("/api/game")
     @ResponseBody
@@ -27,6 +25,15 @@ public class GamesPerUserController {
 
         return gamesPerUser;
     }
+
+    @GetMapping ("/api/game/{username}")
+    public List<GamesPerUser> userById (@PathVariable(name="username") String username) {
+
+        return gamesPerUserDB.findGamesByUser(username);
+    }
+
+
+
 
 
 

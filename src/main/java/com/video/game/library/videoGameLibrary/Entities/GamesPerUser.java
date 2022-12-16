@@ -20,4 +20,9 @@ public class GamesPerUser {
         this.username = username;
         this.gameid = gameid;
     }
+
+    public GamesPerUser(String username, String gameid) {
+        this.username = username;
+        this.gameid = gameid;
+    }
 }

@@ -1,12 +1,15 @@
 package com.video.game.library.videoGameLibrary.DataBases;
 
 import com.video.game.library.videoGameLibrary.Entities.GamesPerUser;
+import com.video.game.library.videoGameLibrary.Entities.User;
 import com.video.game.library.videoGameLibrary.MyConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamesPerUserDB {
     public long addNewGame(GamesPerUser gamesPerUser) {
@@ -32,5 +35,29 @@ public class GamesPerUserDB {
         }
         return id;
     }
+
+    public List<GamesPerUser> findGamesByUser (String username) {
+        List<GamesPerUser> gamesPerUserById = new ArrayList();
+        try {
+            Connection connection = MyConnection.getConnection();
+            String sql = ("SELECT * from GamesPerUSer WHERE username =?");
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet result = preparedStatement.executeQuery();
+
+            while(result.next()){
+                long id = result.getLong("ID");
+                String gameid = result.getString("gameid");
+
+                gamesPerUserById.add( new GamesPerUser(id, username, gameid));
+            }
+
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return gamesPerUserById;
+
+    }
+
 
 }

@@ -8,9 +8,10 @@ public class MyConnection {
     public static Connection getConnection () throws Exception {
 
         Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/video_game_library",
-                "root",
-                "underdark01!");
+                "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7584938",
+                "sql7584938",
+                "JNrQQ7n6wY");
+
 
         return connection;
     }

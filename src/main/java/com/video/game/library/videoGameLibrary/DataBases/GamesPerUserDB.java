@@ -36,20 +36,20 @@ public class GamesPerUserDB {
         return id;
     }
 
-    public List<GamesPerUser> findGamesByUser (String username) {
-        List<GamesPerUser> gamesPerUserById = new ArrayList();
+    public List<String> findGamesByUser (String username) {
+        List<String> gamesPerUserById = new ArrayList();
         try {
             Connection connection = MyConnection.getConnection();
-            String sql = ("SELECT * from GamesPerUSer WHERE username =?");
+            String sql = ("SELECT gameid from GamesPerUSer WHERE username =?");
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet result = preparedStatement.executeQuery();
 
             while(result.next()){
-                long id = result.getLong("ID");
+//                long id = result.getLong("ID");
                 String gameid = result.getString("gameid");
 
-                gamesPerUserById.add( new GamesPerUser(id, username, gameid));
+                gamesPerUserById.add( gameid);
             }
 
         }catch (Exception exception) {

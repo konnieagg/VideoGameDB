@@ -21,8 +21,7 @@ public class GamesPerUser {
         this.gameid = gameid;
     }
 
-    public GamesPerUser(String username, String gameid) {
-        this.username = username;
+    public GamesPerUser(String gameid) {
         this.gameid = gameid;
     }
 }

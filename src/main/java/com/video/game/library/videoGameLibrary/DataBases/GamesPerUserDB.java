@@ -59,5 +59,22 @@ public class GamesPerUserDB {
 
     }
 
+    public int deleteGame (String username, String gameid)  {
+        int numberOfGamesDeleted=0;
+        try {
+            Connection connection = MyConnection.getConnection();
+            String sql = "DELETE FROM GamesPerUSer WHERE username=? AND gameid=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,username);
+
+            preparedStatement.setString(2,gameid);
+            numberOfGamesDeleted = preparedStatement.executeUpdate();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return numberOfGamesDeleted;
+    }
+
 
 }

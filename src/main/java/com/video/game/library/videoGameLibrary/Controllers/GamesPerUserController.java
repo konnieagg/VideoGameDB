@@ -27,9 +27,18 @@ public class GamesPerUserController {
     }
 
     @GetMapping ("/api/game/{username}")
-    public List<String> userById (@PathVariable(name="username") String username) {
+    public List<String> gameByUserUsername (@PathVariable(name="username") String username) {
 
         return gamesPerUserDB.findGamesByUser(username);
+    }
+
+    @DeleteMapping("/api/delete/{username}/{gameid}")
+    public Object deleteGame (
+            @PathVariable(name="username") String username,
+            @PathVariable(name="gameid") String gameid) {
+        if (gamesPerUserDB.deleteGame(username, gameid ) == 0) {
+            return "Game not found!!!";
+        }return gamesPerUserDB.deleteGame(username, gameid);
     }
 
 

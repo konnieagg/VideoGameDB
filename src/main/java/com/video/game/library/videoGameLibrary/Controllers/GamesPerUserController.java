@@ -28,7 +28,7 @@ public class GamesPerUserController {
     }
 
     @GetMapping ("/api/game/{username}")
-    public List<String> gameByUserUsername (@PathVariable(name="username") String username) {
+    public Map<String, Object> gameByUserUsername (@PathVariable(name="username") String username) {
 
         return gamesPerUserDB.findGamesByUser(username);
     }

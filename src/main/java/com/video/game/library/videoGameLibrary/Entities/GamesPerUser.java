@@ -32,4 +32,9 @@ public class GamesPerUser {
         this.gameid = gameid;
         this.gamestatus = gamestatus;
     }
+
+    public GamesPerUser(String gameid, String gamestatus) {
+        this.gameid = gameid;
+        this.gamestatus = gamestatus;
+    }
 }

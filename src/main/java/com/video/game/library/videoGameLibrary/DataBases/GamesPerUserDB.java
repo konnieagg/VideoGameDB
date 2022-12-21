@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GamesPerUserDB {
     public long addNewGame(GamesPerUser gamesPerUser) {
@@ -38,11 +40,11 @@ public class GamesPerUserDB {
         return id;
     }
 
-    public List<String> findGamesByUser (String username) {
-        List<String> gamesPerUserById = new ArrayList();
+    public Map<String, Object> findGamesByUser (String username) {
+        Map<String, Object> gamesPerUserById = new HashMap<>();
         try {
             Connection connection = MyConnection.getConnection();
-            String sql = ("SELECT gameid from GamesPerUSer WHERE username =?");
+            String sql = ("SELECT gameid,gamestatus from GamesPerUSer WHERE username =?");
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet result = preparedStatement.executeQuery();
@@ -50,8 +52,10 @@ public class GamesPerUserDB {
             while(result.next()){
 //                long id = result.getLong("ID");
                 String gameid = result.getString("gameid");
+                String gamestatus = result.getString("gamestatus");
 
-                gamesPerUserById.add( gameid);
+
+                gamesPerUserById.put(gameid, gamestatus);
             }
 
         }catch (Exception exception) {

@@ -10,6 +10,7 @@ public class GamesPerUser {
     private long id;
     private String username;
     private String gameid;
+    private String gamestatus;
 
 
     public GamesPerUser() {
@@ -23,5 +24,12 @@ public class GamesPerUser {
 
     public GamesPerUser(String gameid) {
         this.gameid = gameid;
+    }
+
+    public GamesPerUser(long id, String username, String gameid, String gamestatus) {
+        this.id = id;
+        this.username = username;
+        this.gameid = gameid;
+        this.gamestatus = gamestatus;
     }
 }

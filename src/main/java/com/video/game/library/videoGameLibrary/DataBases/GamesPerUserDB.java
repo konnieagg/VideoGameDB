@@ -16,10 +16,12 @@ public class GamesPerUserDB {
         long id = 0;
         try {
             Connection connection = MyConnection.getConnection();
-            String sql = "INSERT INTO GamesPerUSer VALUES (NULL,?,?)";
+            String sql = "INSERT INTO GamesPerUSer VALUES (NULL,?,?,?)";
             PreparedStatement preparedStatement=connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,gamesPerUser.getUsername());
             preparedStatement.setString(2,gamesPerUser.getGameid());
+            preparedStatement.setString(3,gamesPerUser.getGamestatus());
+
 
 
             preparedStatement.executeUpdate();
@@ -75,6 +77,26 @@ public class GamesPerUserDB {
         }
         return numberOfGamesDeleted;
     }
+
+    public int updateGame(String gamestatus, String username, String gameid) {
+        int numberOfGamesUpdated=0;
+        try {
+            Connection connection = MyConnection.getConnection();
+            String sql = "UPDATE gamesperuser SET gamestatus=? WHERE username=? AND gameid=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,gamestatus);
+            preparedStatement.setString(2,username);
+            preparedStatement.setString(3,gameid);
+
+            preparedStatement.executeUpdate();
+
+
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return numberOfGamesUpdated;
+    }
+
 
 
 }

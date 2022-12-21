@@ -4,6 +4,7 @@ import com.video.game.library.videoGameLibrary.Entities.GamesPerUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -39,6 +40,22 @@ public class GamesPerUserController {
         if (gamesPerUserDB.deleteGame(username, gameid ) == 0) {
             return "Game not found!!!";
         }return gamesPerUserDB.deleteGame(username, gameid);
+    }
+
+    @PutMapping("/api/update/{gamestatus}//{username}/{gameid}")
+    public int GamesPerUser (
+            @PathVariable(name="gamestatus") String gamestatus,
+            @PathVariable(name="username") String username,
+            @PathVariable(name="gameid") String gameid) {
+        return  gamesPerUserDB.updateGame(gamestatus, username, gameid);
+    }
+
+    @PutMapping("/api/update")
+    public int upDateGame (@RequestBody Map<String, Object> body) {
+        String gamestatus=(String)body.get("gamestatus");
+        String username=(String)body.get("username");
+        String gameid=(String)body.get("gameid");
+        return  gamesPerUserDB.updateGame(gamestatus, username, gameid);
     }
 
 

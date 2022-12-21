@@ -40,30 +40,58 @@ public class GamesPerUserDB {
         return id;
     }
 
-    public Map<String, Object> findGamesByUser (String username) {
-        Map<String, Object> gamesPerUserById = new HashMap<>();
-        try {
-            Connection connection = MyConnection.getConnection();
-            String sql = ("SELECT gameid,gamestatus from GamesPerUSer WHERE username =?");
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, username);
-            ResultSet result = preparedStatement.executeQuery();
+//    public Map<String, Object> findGamesByUser (String username) {
+//        Map<String, Object> gamesPerUserById = new HashMap<>();
+//        try {
+//            Connection connection = MyConnection.getConnection();
+//            String sql = ("SELECT gameid,gamestatus from GamesPerUSer WHERE username =?");
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, username);
+//            ResultSet result = preparedStatement.executeQuery();
+//
+//            while(result.next()){
+////                long id = result.getLong("ID");
+//                String gameid = result.getString("gameid");
+//                String gamestatus = result.getString("gamestatus");
+//
+//
+//                gamesPerUserById.put(gameid, gamestatus);
+//            }
+//
+//        }catch (Exception exception) {
+//            exception.printStackTrace();
+//        }
+//        return gamesPerUserById;
+//
+//    }
+public List<Object> findGamesByUser (String username) {
+    List<Object> gamesPerUserById = new ArrayList<>();
+    try {
+        Connection connection = MyConnection.getConnection();
+        String sql = ("SELECT gameid,gamestatus from GamesPerUSer WHERE username =?");
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        ResultSet result = preparedStatement.executeQuery();
 
-            while(result.next()){
+        while(result.next()){
 //                long id = result.getLong("ID");
-                String gameid = result.getString("gameid");
-                String gamestatus = result.getString("gamestatus");
+            Map<String,Object> game = new HashMap<>();
+            String gameid = result.getString("gameid");
+            String gamestatus = result.getString("gamestatus");
+
+            game.put("gameid", gameid);
+            game.put("gamestatus", gamestatus);
 
 
-                gamesPerUserById.put(gameid, gamestatus);
-            }
-
-        }catch (Exception exception) {
-            exception.printStackTrace();
+            gamesPerUserById.add(game);
         }
-        return gamesPerUserById;
 
+    }catch (Exception exception) {
+        exception.printStackTrace();
     }
+    return gamesPerUserById;
+
+}
 
     public int deleteGame (String username, String gameid)  {
         int numberOfGamesDeleted=0;
@@ -99,6 +127,30 @@ public class GamesPerUserDB {
             exception.printStackTrace();
         }
         return numberOfGamesUpdated;
+    }
+
+    public long deleteGame(GamesPerUser gamesPerUser) {
+        long id = 0;
+        try {
+            Connection connection = MyConnection.getConnection();
+            String sql = "DELETE FROM GamesPerUSer WHERE username = ? AND gameid=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1,gamesPerUser.getUsername());
+            preparedStatement.setString(2,gamesPerUser.getGameid());
+
+
+            preparedStatement.executeUpdate();
+
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            id=keys.getLong(1);
+
+
+        }catch (Exception exception) {
+            exception.printStackTrace();
+            return 0;
+        }
+        return id;
     }
 
 

@@ -42,16 +42,16 @@ public class GamesPerUserController {
         }return gamesPerUserDB.deleteGame(username, gameid);
     }
 
-    @PutMapping("/api/update/{gamestatus}//{username}/{gameid}")
-    public int GamesPerUser (
-            @PathVariable(name="gamestatus") String gamestatus,
-            @PathVariable(name="username") String username,
-            @PathVariable(name="gameid") String gameid) {
-        return  gamesPerUserDB.updateGame(gamestatus, username, gameid);
-    }
+//    @PutMapping("/api/update/{gamestatus}//{username}/{gameid}")
+//    public int UpdateGamePerUser (
+//            @PathVariable(name="gamestatus") String gamestatus,
+//            @PathVariable(name="username") String username,
+//            @PathVariable(name="gameid") String gameid) {
+//        return  gamesPerUserDB.updateGame(gamestatus, username, gameid);
+//    }
 
     @PutMapping("/api/update")
-    public int upDateGame (@RequestBody Map<String, Object> body) {
+    public int updateGame (@RequestBody Map<String, Object> body) {
         String gamestatus=(String)body.get("gamestatus");
         String username=(String)body.get("username");
         String gameid=(String)body.get("gameid");

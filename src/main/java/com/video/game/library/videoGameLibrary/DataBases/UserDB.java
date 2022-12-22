@@ -111,13 +111,13 @@ public class UserDB {
         return id;
     }
 
-    public int deleteById (long id)  {
+    public int deleteUser (String username)  {
         int numberOfUsersDeleted=0;
         try {
             Connection connection = MyConnection.getConnection();
-            String sql = "DELETE FROM users WHERE id=?";
+            String sql = "DELETE FROM users WHERE username=?";
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setLong(1,id);
+            preparedStatement.setString(1,username);
             numberOfUsersDeleted = preparedStatement.executeUpdate();
 
         } catch (Exception exception) {

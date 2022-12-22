@@ -58,9 +58,9 @@ public class UserController {
         return user;
     }
 
-    @DeleteMapping("/api/users/{id}")
-    public int deleteUserById (@PathVariable(name="id") long id) {
-        return userDB.deleteById(id);
+    @DeleteMapping("/api/users/{username}")
+    public int deleteUserById (@PathVariable(name="username") String username) {
+        return userDB.deleteUser(username);
 
     }
 

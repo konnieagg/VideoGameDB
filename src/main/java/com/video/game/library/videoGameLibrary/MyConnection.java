@@ -9,8 +9,8 @@ public class MyConnection {
 
         Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/video_game_library",
-                "root",
-                "12345");
+                "newuser",
+                "test1234!");
 
         return connection;
     }
